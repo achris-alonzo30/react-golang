@@ -45,5 +45,5 @@ func main() {
 
 	fmt.Println("Connected to MongoDB")
 
-	collection = client.Database("react-golang").Collection("todos")
+	collection = client.Database("react-go-tutorial").Collection("todos")
 }
