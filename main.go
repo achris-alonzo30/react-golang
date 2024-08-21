@@ -35,8 +35,6 @@ func main() {
 		todo.ID = len(todos) + 1
 		todos = append(todos, *todo)
 
-		
-
 		return c.Status(201).JSON(todo)
 	})
 
@@ -54,7 +52,7 @@ func main() {
 				return c.Status(200).JSON(todos[i])
 			}
 		}
-		
+
 		return c.Status(404).JSON(fiber.Map{"error": "Todo not found"})
 	})
 
@@ -69,7 +67,7 @@ func main() {
 			if todo.ID == id {
 				// Remove the todo from the slice
 				todos = append(todos[:i], todos[i+1:]...)
-				return c.Status(200).JSON(fiber.Map{"message": "Todo deleted successfully"})
+				return c.Status(200).JSON(fiber.Map{"sucess": true})
 			}
 		}
 
