@@ -1,31 +1,38 @@
-import { Flex, Spinner, Stack, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { 
+  Flex,
+  Text,
+  Stack,
+  Spinner,   
+} from "@chakra-ui/react";
+
 import { TodoItem } from "./TodoItem";
+import { useQuery } from "@tanstack/react-query";
+
+export type Todo = {
+  _id: number;
+  title: string;
+  completed: boolean;
+}
 
 export const TodoList = () => {
-	const [isLoading, setIsLoading] = useState(true);
-	const todos = [
-		{
-			_id: 1,
-			body: "Buy groceries",
-			completed: true,
-		},
-		{
-			_id: 2,
-			body: "Walk the dog",
-			completed: false,
-		},
-		{
-			_id: 3,
-			body: "Do laundry",
-			completed: false,
-		},
-		{
-			_id: 4,
-			body: "Cook dinner",
-			completed: true,
-		},
-	];
+	const { data: todos, isLoading,  } = useQuery<Todo[]>({
+    queryKey: ["todos"],
+    queryFn: async () => {
+      try {
+        const res = await fetch("http://localhost:3001/api/todos");
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch todos");
+        }
+
+        const data = await res.json();
+
+        return data;
+      } catch (error) {
+        throw new Error("Failed to fetch todos");
+      }
+    }
+  })
 	return (
 		<>
 			<Text fontSize={"4xl"} textTransform={"uppercase"} fontWeight={"bold"} textAlign={"center"} my={2}>
