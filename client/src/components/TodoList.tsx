@@ -19,7 +19,7 @@ export const TodoList = () => {
     queryKey: ["todos"],
     queryFn: async () => {
       try {
-        const res = await fetch("http://localhost:3001/api/todos");
+        const res = await fetch("http://localhost:8081/api/todos");
 
         if (!res.ok) {
           throw new Error("Failed to fetch todos");
