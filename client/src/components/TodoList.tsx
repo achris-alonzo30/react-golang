@@ -28,7 +28,7 @@ export const TodoList = () => {
 
         const data = await res.json();
 
-        return data;
+        return data || [];
       } catch (error) {
         throw new Error("Failed to fetch todos");
       }
@@ -49,7 +49,6 @@ export const TodoList = () => {
 					<Text fontSize={"xl"} textAlign={"center"} color={"gray.500"}>
 						All tasks completed! 🤞
 					</Text>
-					<img src='/go.png' alt='Go logo' width={70} height={70} />
 				</Stack>
 			)}
 			<Stack gap={3}>

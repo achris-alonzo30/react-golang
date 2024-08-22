@@ -5,24 +5,19 @@ import { MdDelete } from "react-icons/md";
 import { Todo } from "./TodoList";
 import { BASE_URL } from "../constants";
 
-interface TodoItemProps {
-	key: number;
-	todo: Todo;
-}
 
-export const TodoItem = ({ todo }: TodoItemProps) => {
+export const TodoItem = ({ todo }: { todo: Todo}) => {
 	const toast = useToast()
 	const queryClient = useQueryClient()
-	const { mutate: handleUpdateTodo, isPending: isUpdating } = useMutation({
+	const { mutate: updateTodo, isPending: isUpdating } = useMutation({
 		mutationKey: ["updateTodo"],
 		mutationFn: async () => {
 			try {
 				const res = await fetch(`${BASE_URL}/api/todos/${todo._id}`, {
 					method: "PATCH",
-					headers: {
-						"Content-Type": "application/json"
-					},
 				});
+
+				console.log(res)
 
 				if (!res.ok) {
 					throw new Error("Failed to update todos");
@@ -48,7 +43,7 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
 		}
 	})
 
-	const { mutate: handleDeleteTodo, isPending: isDeleting } = useMutation({
+	const { mutate: deleteTodo, isPending: isDeleting } = useMutation({
 		mutationKey: ["deleteTodo"],
 		mutationFn: async () => {
 			try {
@@ -110,11 +105,11 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
 				)}
 			</Flex>
 			<Flex gap={2} alignItems={"center"}>
-				<Box color={"green.500"} cursor={"pointer"} onClick={() => handleUpdateTodo()}>
+				<Box color={"green.500"} cursor={"pointer"} onClick={() => updateTodo()}>
 					{!isUpdating && <FaCheckCircle size={20} />}
 					{isUpdating && <Spinner size="sm" />}
 				</Box>
-				<Box color={"red.500"} cursor={"pointer"} onClick={() => handleDeleteTodo()}>
+				<Box color={"red.500"} cursor={"pointer"} onClick={() => deleteTodo()}>
 					{!isDeleting && <MdDelete size={25} />}
 					{isDeleting && <Spinner size="sm" />}
 				</Box>
