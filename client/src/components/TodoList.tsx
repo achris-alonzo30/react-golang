@@ -7,6 +7,7 @@ import {
 
 import { TodoItem } from "./TodoItem";
 import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "../constants";
 
 export type Todo = {
   _id: number;
@@ -19,7 +20,7 @@ export const TodoList = () => {
     queryKey: ["todos"],
     queryFn: async () => {
       try {
-        const res = await fetch("http://localhost:8081/api/todos");
+        const res = await fetch(`${BASE_URL}/api/todos`);
 
         if (!res.ok) {
           throw new Error("Failed to fetch todos");
